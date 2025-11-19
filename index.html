@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comando Lab | Sales Intelligence</title>
+    
+    <!-- Fonts: Inter, Space Grotesk & Orbitron (Futuristic) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration -->
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              display: ['Space Grotesk', 'sans-serif'],
+              futuristic: ['Orbitron', 'sans-serif'],
+            },
+            colors: {
+              // Comando Lab Palette
+              comando: {
+                neon: '#82D9F6', // Azul Comando (Primário)
+                hover: '#B3ECFF', // Light mode hover
+                darkHover: '#A7E7FF', // Dark mode hover
+                accent: '#5BBAD1',
+                darkInst: '#0F1623', // Azul institucional escuro
+              },
+              // Login Specific Palette
+              login: {
+                bg: '#000000',
+                primary: '#00A8E8', // Azul Elétrico
+                secondary: '#7B2FF7', // Roxo Neon
+                detail: '#4DF0FF', // Ciano Claro
+              },
+              // Functional
+              func: {
+                success: '#16C47F',
+                successDark: '#00E6A6',
+                warning: '#F2C94C',
+                error: '#EB5757',
+                errorDark: '#FF6B6B',
+              },
+              // Semantic Layout Colors (Light)
+              l: {
+                bg: '#FFFFFF',
+                surface: '#F5F7FA',
+                border: '#E1E4EA',
+                textPrimary: '#1E1E1E',
+                textSecondary: '#A3A8B1',
+              },
+              // Semantic Layout Colors (Dark)
+              d: {
+                bg: '#0F1623',
+                surface: '#161D2A',
+                border: '#2B3443',
+                textPrimary: '#E9EEF4',
+                textSecondary: '#9CA7B8',
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Custom scrollbar for futuristic feel */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #2B3443; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #82D9F6; 
+      }
+      
+      body {
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      /* Animation Utilities */
+      .animate-fade-in {
+        animation: fadeIn 0.8s ease-out forwards;
+      }
+      .animate-slide-up {
+        animation: slideUp 0.8s ease-out forwards;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+    "recharts": "https://aistudiocdn.com/recharts@^3.4.1",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.6",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.0",
+    "xlsx": "https://aistudiocdn.com/xlsx@^0.18.5"
+  }
+}
+</script>
+</head>
+  <body class="bg-l-bg text-l-textPrimary dark:bg-d-bg dark:text-d-textPrimary transition-colors duration-300">
+    <div id="root"></div>
+  </body>
+</html>
