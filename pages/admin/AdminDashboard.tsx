@@ -24,7 +24,7 @@ export const AdminDashboard: React.FC = () => {
     return (
         <div className="admin-dashboard-container">
             <div className="admin-dashboard-header">
-                <div>
+                <div>   
                     <h1 className="admin-dashboard-title">
                         Super Admin <span>Dashboard</span>
                     </h1>
