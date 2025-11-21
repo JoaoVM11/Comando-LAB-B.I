@@ -1,3 +1,4 @@
+
 import { Company, PlatformUser, ApiTemplate, UserRole } from '../types';
 import * as XLSX from 'xlsx';
 
@@ -32,8 +33,8 @@ class AdminService {
     else {
         // Mock initial users linked to companies
         this.users = [
-            { id: 'u1', name: 'Carlos CEO', email: 'carlos@techsol.com.br', role: 'supervisor', companyId: '1' },
-            { id: 'u2', name: 'Ana Vendas', email: 'ana@techsol.com.br', role: 'user', companyId: '1' }
+            { id: 'u1', name: 'Carlos CEO', email: 'carlos@techsol.com.br', role: 'supervisor', companyId: '1', jobTitle: 'CEO', password: '123' },
+            { id: 'u2', name: 'Ana Vendas', email: 'ana@techsol.com.br', role: 'user', companyId: '1', jobTitle: 'Vendedora', password: '123' }
         ];
         this.saveUsers();
     }
@@ -75,14 +76,22 @@ class AdminService {
   // --- User Management ---
   getUsersByCompany(companyId: string) { return this.users.filter(u => u.companyId === companyId); }
 
+  // Updated to accept JobTitle and Password
   createUser(data: Omit<PlatformUser, 'id'>) {
       const company = this.companies.find(c => c.id === data.companyId);
       if (!company) throw new Error('Empresa não encontrada');
       if (company.userCount >= company.maxUsers) throw new Error('Limite de usuários excedido para este pacote.');
 
+      // Check if email already exists
+      if (this.users.find(u => u.email === data.email)) {
+          throw new Error('E-mail já cadastrado na plataforma.');
+      }
+
       const newUser: PlatformUser = {
           ...data,
-          id: Date.now().toString() + Math.random().toString(36).substr(2,5)
+          id: Date.now().toString() + Math.random().toString(36).substr(2,5),
+          // Ensure avatar is set if not provided
+          avatar: data.avatar || data.name.substr(0,2).toUpperCase()
       };
       
       this.users.push(newUser);
@@ -151,7 +160,9 @@ class AdminService {
                           email: row.Email,
                           role: (row.Funcao === 'Supervisor' || row.Funcao === 'supervisor') ? 'supervisor' : 'user',
                           companyId: companyId,
-                          avatar: row.Nome.substr(0,2).toUpperCase()
+                          avatar: row.Nome.substr(0,2).toUpperCase(),
+                          jobTitle: row.Cargo,
+                          password: 'Mudar123' // Default password for imported users
                       });
                       added++;
                   }

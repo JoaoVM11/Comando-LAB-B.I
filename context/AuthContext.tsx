@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { PlatformUser, UserRole } from '../types';
 
@@ -29,7 +30,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (email: string, password?: string): Promise<boolean> => {
-    // SUPER ADMIN CHECK (Credentials provided by user)
+    // 1. SUPER ADMIN CHECK (Hardcoded Founder Credentials)
     if (email === 'comando.oficial.ia@gmail.com' && password === 'ComandoLab25#') {
       const superAdmin: PlatformUser = {
         id: 'master-001',
@@ -37,7 +38,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         email: email,
         role: 'superadmin',
         companyId: 'comando-hq',
-        avatar: 'JV'
+        avatar: 'JV',
+        jobTitle: 'Founder & CEO'
       };
       
       setUser(superAdmin);
@@ -47,15 +49,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return true;
     }
 
-    // DEFAULT USER MOCK (For demo purposes if not super admin)
-    if (email !== 'comando.oficial.ia@gmail.com') {
+    // 2. DATABASE CHECK (Simulated Users created by Admin)
+    // Retrieves users stored by adminService
+    const storedUsers = localStorage.getItem('comando_admin_users');
+    if (storedUsers) {
+        const users: PlatformUser[] = JSON.parse(storedUsers);
+        const foundUser = users.find(u => u.email === email && u.password === password);
+        
+        if (foundUser) {
+            setUser(foundUser);
+            setIsAuthenticated(true);
+            localStorage.setItem('comando-auth', 'true');
+            localStorage.setItem('comando-user', JSON.stringify(foundUser));
+            return true;
+        }
+    }
+
+    // 3. FALLBACK / LEGACY MOCK (Only if no DB user found, for testing simplicity if needed)
+    if (email !== 'comando.oficial.ia@gmail.com' && password === 'demo123') {
        const normalUser: PlatformUser = {
         id: 'user-001',
         name: 'Alex Souza',
         email: email,
         role: 'supervisor', // Default to supervisor for demo
         companyId: 'company-001',
-        avatar: 'AS'
+        avatar: 'AS',
+        jobTitle: 'Gerente Comercial'
       };
       setUser(normalUser);
       setIsAuthenticated(true);

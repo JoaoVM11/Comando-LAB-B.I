@@ -158,7 +158,7 @@ export const Integrations: React.FC = () => {
               <p className="text-xs text-gray-400 mb-6 min-h-[2.5em]">{item.description}</p>
 
               <div className="grid grid-cols-2 gap-2">
-                {item.status === IntegrationStatus.CONNECTED ? (
+                {(item.status === IntegrationStatus.CONNECTED || item.status === IntegrationStatus.SYNCING) ? (
                   <>
                      <button 
                        onClick={() => handleSync(item.id)}

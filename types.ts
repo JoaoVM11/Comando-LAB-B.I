@@ -1,3 +1,4 @@
+
 // Integration Types
 export enum IntegrationStatus {
   CONNECTED = 'Connected',
@@ -103,6 +104,8 @@ export interface PlatformUser {
   role: UserRole;
   companyId: string;
   avatar?: string;
+  jobTitle?: string; // Novo campo: Cargo
+  password?: string; // Novo campo: Senha (simulação de DB)
 }
 
 export interface Company {

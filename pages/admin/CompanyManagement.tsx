@@ -1,9 +1,41 @@
+
 import React, { useState, useEffect } from 'react';
 import { adminService } from '../../services/adminService';
 import { Company, PlatformUser } from '../../types';
 import { Card } from '../../components/Card';
 import { Modal } from '../../components/Modal';
 import { Building, Plus, Trash2, Users, Upload, FileSpreadsheet, Download } from 'lucide-react';
+
+// Lista completa de estados brasileiros
+const BR_STATES = [
+    { value: 'AC', label: 'Acre' }, 
+    { value: 'AL', label: 'Alagoas' }, 
+    { value: 'AP', label: 'Amapá' },
+    { value: 'AM', label: 'Amazonas' }, 
+    { value: 'BA', label: 'Bahia' }, 
+    { value: 'CE', label: 'Ceará' },
+    { value: 'DF', label: 'Distrito Federal' }, 
+    { value: 'ES', label: 'Espírito Santo' }, 
+    { value: 'GO', label: 'Goiás' },
+    { value: 'MA', label: 'Maranhão' }, 
+    { value: 'MT', label: 'Mato Grosso' }, 
+    { value: 'MS', label: 'Mato Grosso do Sul' },
+    { value: 'MG', label: 'Minas Gerais' }, 
+    { value: 'PA', label: 'Pará' }, 
+    { value: 'PB', label: 'Paraíba' },
+    { value: 'PR', label: 'Paraná' }, 
+    { value: 'PE', label: 'Pernambuco' }, 
+    { value: 'PI', label: 'Piauí' },
+    { value: 'RJ', label: 'Rio de Janeiro' }, 
+    { value: 'RN', label: 'Rio Grande do Norte' }, 
+    { value: 'RS', label: 'Rio Grande do Sul' },
+    { value: 'RO', label: 'Rondônia' }, 
+    { value: 'RR', label: 'Roraima' }, 
+    { value: 'SC', label: 'Santa Catarina' },
+    { value: 'SP', label: 'São Paulo' }, 
+    { value: 'SE', label: 'Sergipe' }, 
+    { value: 'TO', label: 'Tocantins' }
+];
 
 export const CompanyManagement: React.FC = () => {
     const [companies, setCompanies] = useState<Company[]>([]);
@@ -55,7 +87,9 @@ export const CompanyManagement: React.FC = () => {
                     email: formData.get('email') as string,
                     role: formData.get('role') as any,
                     companyId: selectedCompany.id,
-                    avatar: 'U'
+                    avatar: 'U',
+                    jobTitle: formData.get('jobTitle') as string,
+                    password: formData.get('password') as string
                 });
                 setCompanyUsers(adminService.getUsersByCompany(selectedCompany.id));
                 setCompanies([...adminService.getCompanies()]); // Update user count
@@ -154,9 +188,12 @@ export const CompanyManagement: React.FC = () => {
                     <input placeholder="Site (ex: empresa.com.br)" onChange={e => setNewCompany({...newCompany, site: e.target.value})} className="w-full p-3 bg-black/20 border border-gray-700 rounded text-white" />
                     <div className="grid grid-cols-2 gap-4">
                         <input placeholder="Segmento" onChange={e => setNewCompany({...newCompany, segment: e.target.value})} className="w-full p-3 bg-black/20 border border-gray-700 rounded text-white" />
+                        
                         <select onChange={e => setNewCompany({...newCompany, state: e.target.value})} className="w-full p-3 bg-black/20 border border-gray-700 rounded text-white">
                             <option value="">Selecione UF</option>
-                            <option value="SP">SP</option> <option value="RJ">RJ</option> <option value="MG">MG</option> <option value="RS">RS</option>
+                            {BR_STATES.map(state => (
+                                <option key={state.value} value={state.value}>{state.value} - {state.label}</option>
+                            ))}
                         </select>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
@@ -176,10 +213,14 @@ export const CompanyManagement: React.FC = () => {
                     {/* Add Single User */}
                     <form onSubmit={handleCreateUser} className="p-4 bg-gray-800/50 rounded-lg border border-gray-700 space-y-3">
                         <h4 className="text-xs font-bold text-login-primary uppercase">Adicionar Manualmente</h4>
-                        <div className="grid grid-cols-3 gap-2">
-                            <input name="name" placeholder="Nome" required className="p-2 bg-black/40 border border-gray-700 rounded text-sm text-white" />
+                        <div className="grid grid-cols-2 gap-2">
+                            <input name="name" placeholder="Nome Completo" required className="p-2 bg-black/40 border border-gray-700 rounded text-sm text-white" />
                             <input name="email" type="email" placeholder="Email" required className="p-2 bg-black/40 border border-gray-700 rounded text-sm text-white" />
-                            <select name="role" className="p-2 bg-black/40 border border-gray-700 rounded text-sm text-white">
+                        </div>
+                        <div className="grid grid-cols-3 gap-2">
+                             <input name="jobTitle" placeholder="Cargo" required className="p-2 bg-black/40 border border-gray-700 rounded text-sm text-white" />
+                             <input name="password" type="text" placeholder="Senha Provisória" required className="p-2 bg-black/40 border border-gray-700 rounded text-sm text-white" />
+                             <select name="role" className="p-2 bg-black/40 border border-gray-700 rounded text-sm text-white">
                                 <option value="user">Usuário</option>
                                 <option value="supervisor">Supervisor</option>
                             </select>
@@ -210,6 +251,7 @@ export const CompanyManagement: React.FC = () => {
                                      <th className="py-2">Nome</th>
                                      <th>Email</th>
                                      <th>Cargo</th>
+                                     <th>Função</th>
                                      <th></th>
                                  </tr>
                              </thead>
@@ -218,6 +260,7 @@ export const CompanyManagement: React.FC = () => {
                                      <tr key={u.id} className="border-b border-gray-800">
                                          <td className="py-2">{u.name}</td>
                                          <td>{u.email}</td>
+                                         <td>{u.jobTitle || '-'}</td>
                                          <td>
                                              <span className={`text-[10px] px-1.5 py-0.5 rounded ${u.role === 'supervisor' ? 'bg-purple-500/20 text-purple-400' : 'bg-gray-700 text-gray-400'}`}>
                                                  {u.role}
