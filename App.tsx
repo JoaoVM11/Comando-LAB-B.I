@@ -8,8 +8,9 @@ import { Integrations } from './pages/Integrations';
 import { Library } from './pages/Library';
 import { Settings } from './pages/Settings';
 import { Reports } from './pages/Reports';
-import { Login } from './pages/Login';
+import Login from './pages/Login';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import './App.css';
 
 // Admin Pages
 import { AdminDashboard } from './pages/admin/AdminDashboard';
@@ -25,7 +26,7 @@ const AuthenticatedLayout: React.FC = () => {
   const isSuperAdmin = user?.role === 'superadmin';
 
   return (
-    <div className="flex h-screen overflow-hidden bg-l-bg dark:bg-d-bg transition-colors duration-300">
+    <div className="app-layout">
       <Sidebar 
         collapsed={collapsed} 
         setCollapsed={setCollapsed} 
@@ -33,14 +34,13 @@ const AuthenticatedLayout: React.FC = () => {
         setMobileMenuOpen={setMobileMenuOpen} 
       />
       
-      <div className="flex-1 flex flex-col h-full overflow-hidden relative">
+      <div className="app-main">
         <Navbar 
           title={isSuperAdmin ? "Comando Enterprise Admin" : "Plataforma Sales Intelligence"} 
-          
         />
         
-        <main className="flex-1 overflow-x-hidden overflow-y-auto p-4 md:p-6 scroll-smooth">
-           <div className="max-w-7xl mx-auto w-full pb-10">
+        <main className="app-content">
+           <div className="app-content-wrapper">
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/intelligence" element={<Intelligence />} />

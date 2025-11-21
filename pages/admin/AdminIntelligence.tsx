@@ -3,6 +3,7 @@ import { chatWithAnalyst } from '../../services/geminiService';
 import { adminService } from '../../services/adminService';
 import { Card } from '../../components/Card';
 import { BrainCircuit, Send, Activity, Users, TrendingUp } from 'lucide-react';
+import './AdminIntelligence.css';
 
 export const AdminIntelligence: React.FC = () => {
     const [query, setQuery] = useState('');
@@ -37,59 +38,59 @@ export const AdminIntelligence: React.FC = () => {
     };
 
     return (
-        <div className="h-[calc(100vh-8rem)] grid grid-cols-1 lg:grid-cols-3 gap-6 pb-10">
-             <div className="lg:col-span-1 space-y-6">
-                 <Card className="bg-gradient-to-br from-login-primary/20 to-transparent border-login-primary/30">
-                     <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2"><BrainCircuit /> Enterprise Brain</h3>
-                     <p className="text-sm text-blue-200">
+        <div className="admin-intelligence-container">
+             <div className="admin-intelligence-sidebar">
+                 <Card className="admin-intelligence-info-card">
+                     <h3 className="admin-intelligence-info-title"><BrainCircuit /> Enterprise Brain</h3>
+                     <p className="admin-intelligence-info-text">
                          Use esta IA para detectar churn, oportunidades de upsell em massa e analisar a saúde da carteira de clientes.
                      </p>
                  </Card>
                  
-                 <div className="space-y-2">
-                     <p className="text-xs font-bold text-gray-500 uppercase">Sugestões de Análise</p>
+                 <div className="admin-intelligence-suggestions">
+                     <p className="admin-intelligence-suggestions-title">Sugestões de Análise</p>
                      {['Qual segmento tem maior MRR?', 'Existem empresas com risco de churn?', 'Sugira uma estratégia de crescimento'].map(q => (
-                         <button key={q} onClick={() => setQuery(q)} className="w-full text-left p-3 rounded bg-gray-800 hover:bg-gray-700 text-sm text-gray-300 transition-colors">
+                         <button key={q} onClick={() => setQuery(q)} className="admin-intelligence-suggestion-button">
                              {q}
                          </button>
                      ))}
                  </div>
              </div>
 
-             <Card className="lg:col-span-2 flex flex-col h-full">
-                 <div className="flex-1 overflow-y-auto p-4 space-y-4">
+             <Card className="admin-intelligence-chat-card">
+                 <div className="admin-intelligence-chat-content">
                      {response ? (
-                         <div className="p-6 bg-gray-800/50 rounded-xl border border-gray-700">
-                             <div className="flex items-center gap-2 mb-4 text-login-detail">
+                         <div className="admin-intelligence-response">
+                             <div className="admin-intelligence-response-header">
                                  <Activity size={20} />
-                                 <span className="font-bold uppercase">Análise Gerada</span>
+                                 <span className="admin-intelligence-response-title">Análise Gerada</span>
                              </div>
-                             <div className="prose prose-invert text-sm leading-relaxed whitespace-pre-wrap">
+                             <div className="admin-intelligence-response-text">
                                  {response}
                              </div>
                          </div>
                      ) : (
-                         <div className="h-full flex flex-col items-center justify-center text-gray-600 opacity-50">
+                         <div className="admin-intelligence-empty">
                              <BrainCircuit size={64} />
-                             <p className="mt-4">Aguardando comando...</p>
+                             <p>Aguardando comando...</p>
                          </div>
                      )}
                  </div>
                  
-                 <div className="mt-4 relative">
+                 <div className="admin-intelligence-input-wrapper">
                      <input 
                         value={query}
                         onChange={e => setQuery(e.target.value)}
                         placeholder="Pergunte sobre a base de clientes..."
-                        className="w-full p-4 pr-12 bg-black/30 border border-gray-700 rounded-xl text-white focus:border-login-primary outline-none"
+                        className="admin-intelligence-input"
                         onKeyDown={e => e.key === 'Enter' && handleAnalyze()}
                      />
                      <button 
                         onClick={handleAnalyze}
                         disabled={loading}
-                        className="absolute right-2 top-2 p-2 bg-login-primary text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 transition-colors"
+                        className="admin-intelligence-send-button"
                      >
-                         {loading ? <Activity className="animate-spin" size={20} /> : <Send size={20} />}
+                         {loading ? <Activity className="spinning" size={20} /> : <Send size={20} />}
                      </button>
                  </div>
              </Card>

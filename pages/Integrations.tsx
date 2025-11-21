@@ -8,6 +8,7 @@ import {
   FileSpreadsheet, Code, Shield, Server, X, Activity, Terminal, 
   UploadCloud, Lock, Play
 } from 'lucide-react';
+import './Integrations.css';
 
 export const Integrations: React.FC = () => {
   const [integrations, setIntegrations] = useState<Integration[]>([]);
@@ -99,24 +100,24 @@ export const Integrations: React.FC = () => {
   // Helper for Status Color
   const getStatusColor = (status: IntegrationStatus) => {
     switch (status) {
-      case IntegrationStatus.CONNECTED: return 'text-func-success border-func-success/30 bg-func-success/10';
-      case IntegrationStatus.ERROR: return 'text-func-error border-func-error/30 bg-func-error/10';
-      case IntegrationStatus.SYNCING: return 'text-comando-neon border-comando-neon/30 bg-comando-neon/10';
-      default: return 'text-gray-500 border-gray-700 bg-gray-800/50';
+      case IntegrationStatus.CONNECTED: return 'integration-status-connected';
+      case IntegrationStatus.ERROR: return 'integration-status-error';
+      case IntegrationStatus.SYNCING: return 'integration-status-syncing';
+      default: return 'integration-status-disconnected';
     }
   };
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 pb-10 min-h-screen">
+    <div className="integrations-container">
       
       {/* Left Column: Integrations Grid */}
-      <div className="xl:col-span-2 space-y-6">
-        <div className="flex justify-between items-end">
+      <div className="integrations-main">
+        <div className="integrations-header">
           <div>
-            <h2 className="text-2xl font-display font-bold text-l-textPrimary dark:text-d-textPrimary uppercase tracking-wider">
-              Central de <span className="text-comando-neon">Integrações</span>
+            <h2 className="integrations-title">
+              Central de <span className="integrations-title-accent">Integrações</span>
             </h2>
-            <p className="text-l-textSecondary dark:text-d-textSecondary text-sm mt-1">
+            <p className="integrations-subtitle">
               Gerencie APIs, CRMs e fontes de dados.
             </p>
           </div>
@@ -125,51 +126,48 @@ export const Integrations: React.FC = () => {
               setSelectedIntegration({ id: 'new', name: 'Nova API Custom', type: 'API', status: IntegrationStatus.DISCONNECTED, logo: 'code' });
               setIsModalOpen(true);
             }}
-            className="px-4 py-2 bg-comando-darkInst border border-comando-neon text-comando-neon rounded-lg hover:bg-comando-neon hover:text-comando-darkInst transition-all text-sm font-bold uppercase tracking-wider shadow-[0_0_10px_rgba(130,217,246,0.2)]"
+            className="integrations-add-button"
           >
             + Adicionar Fonte
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="integrations-grid">
           {integrations.map((item) => (
             <div 
               key={item.id} 
-              className={`
-                relative group overflow-hidden rounded-xl bg-l-surface dark:bg-[#0b101b] border border-l-border dark:border-[#1e2736] p-6 transition-all duration-300
-                hover:border-comando-neon/50 hover:shadow-[0_0_20px_rgba(130,217,246,0.1)]
-              `}
+              className="integration-card"
             >
-              <div className="flex justify-between items-start mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-lg bg-black/40 text-comando-neon border border-white/5">
+              <div className="integration-card-header">
+                <div className="integration-card-icon-wrapper">
+                  <div className="integration-card-icon">
                     {getIcon(item.type, item.logo)}
                   </div>
                   <div>
-                    <h3 className="font-bold text-l-textPrimary dark:text-d-textPrimary">{item.name}</h3>
-                    <span className="text-[10px] uppercase tracking-widest text-gray-500">{item.type}</span>
+                    <h3 className="integration-card-name">{item.name}</h3>
+                    <span className="integration-card-type">{item.type}</span>
                   </div>
                 </div>
-                <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase border ${getStatusColor(item.status)}`}>
+                <span className={`integration-status-badge ${getStatusColor(item.status)}`}>
                   {item.status === IntegrationStatus.SYNCING ? 'Sincronizando...' : item.status}
                 </span>
               </div>
 
-              <p className="text-xs text-gray-400 mb-6 min-h-[2.5em]">{item.description}</p>
+              <p className="integration-card-description">{item.description}</p>
 
-              <div className="grid grid-cols-2 gap-2">
+              <div className="integration-card-actions">
                 {(item.status === IntegrationStatus.CONNECTED || item.status === IntegrationStatus.SYNCING) ? (
                   <>
                      <button 
                        onClick={() => handleSync(item.id)}
                        disabled={item.status === IntegrationStatus.SYNCING}
-                       className="flex items-center justify-center gap-2 px-3 py-2 rounded bg-comando-neon/10 text-comando-neon border border-comando-neon/20 hover:bg-comando-neon/20 transition-colors text-xs font-bold uppercase"
+                       className={`integration-action-button sync ${item.status === IntegrationStatus.SYNCING ? 'spinning' : ''}`}
                      >
-                       <RotateCw size={14} className={item.status === IntegrationStatus.SYNCING ? 'animate-spin' : ''} /> Sincronizar
+                       <RotateCw size={14} /> Sincronizar
                      </button>
                      <button 
                        onClick={() => handleDisconnect(item.id)}
-                       className="flex items-center justify-center gap-2 px-3 py-2 rounded bg-func-error/10 text-func-error border border-func-error/20 hover:bg-func-error/20 transition-colors text-xs font-bold uppercase"
+                       className="integration-action-button disconnect"
                      >
                        <Power size={14} /> Desconectar
                      </button>
@@ -177,7 +175,7 @@ export const Integrations: React.FC = () => {
                 ) : (
                   <button 
                     onClick={() => handleOpenConnect(item)}
-                    className="col-span-2 flex items-center justify-center gap-2 px-3 py-2 rounded bg-comando-neon text-comando-darkInst font-bold uppercase tracking-wider hover:shadow-[0_0_15px_rgba(130,217,246,0.4)] transition-all text-xs"
+                    className="integration-action-button connect"
                   >
                     <Power size={14} /> Conectar Agora
                   </button>
@@ -187,7 +185,7 @@ export const Integrations: React.FC = () => {
               {item.status === IntegrationStatus.CONNECTED && (
                  <button 
                     onClick={() => handleTestConnection(item.id)}
-                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 p-1 text-gray-500 hover:text-comando-neon transition-all"
+                    className="integration-test-button"
                     title="Testar Conexão"
                  >
                     <Activity size={14} />
@@ -199,36 +197,30 @@ export const Integrations: React.FC = () => {
       </div>
 
       {/* Right Column: Logs Terminal */}
-      <div className="xl:col-span-1">
-        <div className="sticky top-24">
-           <div className="bg-[#080a0f] border border-[#1e2736] rounded-xl overflow-hidden flex flex-col h-[calc(100vh-10rem)] shadow-2xl">
+      <div className="integrations-logs">
+        <div className="integrations-logs-sticky">
+           <div className="integrations-terminal">
               {/* Terminal Header */}
-              <div className="bg-[#161d2a] p-3 border-b border-[#1e2736] flex items-center justify-between">
-                 <div className="flex items-center gap-2">
-                    <Terminal size={16} className="text-comando-neon" />
-                    <span className="text-xs font-bold text-gray-300 uppercase tracking-wider">System Logs</span>
+              <div className="integrations-terminal-header">
+                 <div className="integrations-terminal-header-left">
+                    <Terminal size={16} className="integrations-terminal-icon" />
+                    <span className="integrations-terminal-title">System Logs</span>
                  </div>
-                 <div className="flex gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500"></div>
+                 <div className="integrations-terminal-dots">
+                    <div className="integrations-terminal-dot red"></div>
+                    <div className="integrations-terminal-dot yellow"></div>
+                    <div className="integrations-terminal-dot green"></div>
                  </div>
               </div>
 
               {/* Logs Content */}
-              <div className="flex-1 p-4 overflow-y-auto font-mono text-xs space-y-3 bg-black/50 backdrop-blur-sm">
-                 {logs.length === 0 && <div className="text-gray-600 italic">Aguardando eventos...</div>}
+              <div className="integrations-terminal-content">
+                 {logs.length === 0 && <div className="integrations-terminal-empty">Aguardando eventos...</div>}
                  {logs.map((log) => (
-                    <div key={log.id} className="flex gap-2 animate-fade-in">
-                       <span className="text-gray-600 shrink-0">[{log.timestamp}]</span>
-                       <span className={`
-                          break-all
-                          ${log.level === 'error' ? 'text-func-error' : ''}
-                          ${log.level === 'success' ? 'text-func-success' : ''}
-                          ${log.level === 'warning' ? 'text-func-warning' : ''}
-                          ${log.level === 'info' ? 'text-blue-300' : ''}
-                       `}>
-                          <span className="uppercase font-bold mr-1">{log.level}:</span>
+                    <div key={log.id} className="integrations-log-item">
+                       <span className="integrations-log-timestamp">[{log.timestamp}]</span>
+                       <span className={`integrations-log-message ${log.level}`}>
+                          <span className="integrations-log-level">{log.level}:</span>
                           {log.message}
                        </span>
                     </div>
@@ -237,9 +229,9 @@ export const Integrations: React.FC = () => {
               </div>
               
               {/* Footer Status */}
-              <div className="p-2 bg-[#0b101b] border-t border-[#1e2736] text-[10px] text-gray-500 flex justify-between">
+              <div className="integrations-terminal-footer">
                   <span>Status: Online</span>
-                  <span className="animate-pulse text-comando-neon">● Live</span>
+                  <span className="integrations-terminal-live">● Live</span>
               </div>
            </div>
         </div>
@@ -252,45 +244,40 @@ export const Integrations: React.FC = () => {
         title={`Conectar ${selectedIntegration?.name || 'Fonte'}`}
       >
         {selectedIntegration?.name === 'Excel Upload' ? (
-          <div className="space-y-6 text-center py-8">
-             <div className="w-20 h-20 mx-auto rounded-full bg-gray-800 flex items-center justify-center border-2 border-dashed border-gray-600">
-                <UploadCloud size={32} className="text-gray-400" />
+          <div className="integrations-modal-upload">
+             <div className="integrations-upload-icon-wrapper">
+                <UploadCloud size={32} className="integrations-upload-icon" />
              </div>
              <div>
-               <h4 className="text-white font-bold mb-2">Arraste sua planilha .xlsx</h4>
-               <p className="text-gray-500 text-sm">Ou clique para selecionar do computador</p>
+               <h4 className="integrations-upload-title">Arraste sua planilha .xlsx</h4>
+               <p className="integrations-upload-subtitle">Ou clique para selecionar do computador</p>
              </div>
              <input 
                type="file" 
                accept=".xlsx, .xls" 
                onChange={handleFileUpload}
-               className="block w-full text-sm text-gray-500
-                 file:mr-4 file:py-2 file:px-4
-                 file:rounded-full file:border-0
-                 file:text-sm file:font-semibold
-                 file:bg-comando-neon file:text-comando-darkInst
-                 hover:file:bg-comando-hover cursor-pointer"
+               className="integrations-file-input"
              />
-             {isProcessing && <p className="text-comando-neon animate-pulse text-sm">Processando arquivo...</p>}
+             {isProcessing && <p className="integrations-processing">Processando arquivo...</p>}
           </div>
         ) : (
-          <div className="space-y-6">
-            <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg flex items-start gap-3">
-              <Shield size={20} className="text-blue-400 shrink-0 mt-0.5" />
-              <div className="text-sm text-blue-200">
-                <strong className="block text-blue-400 mb-1">Conexão Segura</strong>
+          <div className="integrations-modal-form">
+            <div className="integrations-security-notice">
+              <Shield size={20} className="integrations-security-icon" />
+              <div className="integrations-security-text">
+                <strong className="integrations-security-title">Conexão Segura</strong>
                 Suas credenciais são criptografadas localmente (Mock) e usadas apenas para sincronização.
               </div>
             </div>
 
-            <div>
-              <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block">Método de Autenticação</label>
-              <div className="flex gap-2 p-1 bg-[#0b101b] rounded-lg border border-[#1e2736]">
+            <div className="integrations-auth-method">
+              <label className="integrations-form-label">Método de Autenticação</label>
+              <div className="integrations-auth-buttons">
                 {['apikey', 'oauth2', 'webhook'].map((type) => (
                   <button
                     key={type}
                     onClick={() => setAuthType(type)}
-                    className={`flex-1 py-2 rounded text-xs font-bold uppercase transition-all ${authType === type ? 'bg-comando-neon text-comando-darkInst' : 'text-gray-500 hover:text-white'}`}
+                    className={`integrations-auth-button ${authType === type ? 'active' : ''}`}
                   >
                     {type}
                   </button>
@@ -300,26 +287,26 @@ export const Integrations: React.FC = () => {
             
             {authType !== 'oauth2' && (
               <>
-                <div>
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block">Base URL (Opcional)</label>
+                <div className="integrations-form-field">
+                  <label className="integrations-form-label">Base URL (Opcional)</label>
                   <input 
                     type="text" 
                     value={baseUrl}
                     onChange={(e) => setBaseUrl(e.target.value)}
                     placeholder="https://api.seucrm.com/v2"
-                    className="w-full bg-[#0b101b] border border-[#1e2736] rounded-lg p-3 text-white placeholder-gray-600 focus:border-comando-neon focus:outline-none transition-colors"
+                    className="integrations-form-input"
                   />
                 </div>
-                <div>
-                  <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block">API Key / Token</label>
-                  <div className="relative">
-                    <Lock size={16} className="absolute left-3 top-3.5 text-gray-500" />
+                <div className="integrations-form-field">
+                  <label className="integrations-form-label">API Key / Token</label>
+                  <div className="integrations-form-input-wrapper">
+                    <Lock size={16} className="integrations-form-input-icon" />
                     <input 
                       type="password" 
                       value={apiKey}
                       onChange={(e) => setApiKey(e.target.value)}
                       placeholder="Cole sua chave aqui"
-                      className="w-full bg-[#0b101b] border border-[#1e2736] rounded-lg p-3 pl-10 text-white placeholder-gray-600 focus:border-comando-neon focus:outline-none transition-colors"
+                      className="integrations-form-input with-icon"
                     />
                   </div>
                 </div>
@@ -327,32 +314,32 @@ export const Integrations: React.FC = () => {
             )}
 
             {authType === 'oauth2' && (
-               <div className="text-center py-4">
+               <div className="integrations-oauth-section">
                   <button 
                     onClick={handleConnect}
-                    className="w-full py-3 bg-white text-black font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-gray-200"
+                    className="integrations-oauth-button"
                   >
-                    <img src="https://www.google.com/favicon.ico" className="w-4 h-4" alt="Google" />
+                    <img src="https://www.google.com/favicon.ico" className="integrations-oauth-icon" alt="Google" />
                     Entrar com {selectedIntegration?.name}
                   </button>
-                  <p className="text-xs text-gray-500 mt-2">Você será redirecionado para a página de consentimento.</p>
+                  <p className="integrations-oauth-note">Você será redirecionado para a página de consentimento.</p>
                </div>
             )}
 
             {authType !== 'oauth2' && (
-               <div className="flex justify-end gap-3 pt-4 border-t border-[#1e2736]">
+               <div className="integrations-modal-actions">
                  <button 
                    onClick={() => setIsModalOpen(false)}
-                   className="px-4 py-2 rounded text-gray-400 hover:text-white transition-colors"
+                   className="integrations-modal-cancel"
                  >
                    Cancelar
                  </button>
                  <button 
                    onClick={handleConnect}
                    disabled={isProcessing}
-                   className="px-6 py-2 rounded bg-comando-neon text-comando-darkInst font-bold uppercase tracking-wider hover:shadow-[0_0_15px_rgba(130,217,246,0.4)] transition-all flex items-center gap-2"
+                   className="integrations-modal-save"
                  >
-                   {isProcessing ? 'Conectando...' : 'Salvar e Conectar'} {isProcessing && <Activity size={16} className="animate-spin" />}
+                   {isProcessing ? 'Conectando...' : 'Salvar e Conectar'} {isProcessing && <Activity size={16} className="spinning" />}
                  </button>
                </div>
             )}

@@ -1,0 +1,309 @@
+/* Settings Page Styles */
+.settings-container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+.settings-header {
+  margin-bottom: 24px;
+}
+
+.settings-title {
+  font-size: 24px;
+  font-family: var(--font-display, 'Inter', sans-serif);
+  font-weight: 700;
+  color: var(--text-primary-light, #E9EEF4);
+  margin: 0 0 4px 0;
+}
+
+.dark .settings-title {
+  color: var(--text-primary-dark, #F5F7FA);
+}
+
+.settings-subtitle {
+  color: var(--text-secondary-light, #9CA7B8);
+  font-size: 14px;
+}
+
+.dark .settings-subtitle {
+  color: var(--text-secondary-dark, #6B7280);
+}
+
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.settings-form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .settings-form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.settings-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-form-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary-light, #9CA7B8);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dark .settings-form-label {
+  color: var(--text-secondary-dark, #6B7280);
+}
+
+.settings-form-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--bg-light, #0F1623);
+  border: 1px solid var(--border-light, #2B3443);
+  color: var(--text-primary-light, #E9EEF4);
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.settings-form-input:focus {
+  outline: none;
+  border-color: var(--comando-neon, #82D9F6);
+}
+
+.settings-form-input.disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.dark .settings-form-input {
+  background: var(--bg-dark, #0A0E17);
+  border-color: var(--border-dark, #1E2736);
+  color: var(--text-primary-dark, #F5F7FA);
+}
+
+.settings-section-divider {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border-light, #2B3443);
+}
+
+.dark .settings-section-divider {
+  border-top-color: var(--border-dark, #1E2736);
+}
+
+.settings-section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.settings-section-icon {
+  padding: 8px;
+  background: rgba(130, 217, 246, 0.1);
+  border-radius: 8px;
+  color: var(--comando-neon, #82D9F6);
+}
+
+.settings-section-title {
+  font-weight: 700;
+  color: var(--text-primary-light, #E9EEF4);
+  margin: 0 0 4px 0;
+}
+
+.dark .settings-section-title {
+  color: var(--text-primary-dark, #F5F7FA);
+}
+
+.settings-section-description {
+  font-size: 12px;
+  color: var(--text-secondary-light, #9CA7B8);
+}
+
+.dark .settings-section-description {
+  color: var(--text-secondary-dark, #6B7280);
+}
+
+.settings-password-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+  .settings-password-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.settings-password-new {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.settings-password-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-secondary-light, #9CA7B8);
+  opacity: 0.7;
+}
+
+.dark .settings-password-hint {
+  color: var(--text-secondary-dark, #6B7280);
+}
+
+.settings-preference-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-light, #2B3443);
+}
+
+.settings-preference-item:last-child {
+  border-bottom: none;
+  padding-top: 16px;
+}
+
+.dark .settings-preference-item {
+  border-bottom-color: var(--border-dark, #1E2736);
+}
+
+.settings-preference-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.settings-toggle {
+  width: 40px;
+  height: 24px;
+  border-radius: 9999px;
+  background: var(--border-light, #2B3443);
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.settings-toggle.active {
+  background: var(--comando-neon, #82D9F6);
+}
+
+.dark .settings-toggle {
+  background: var(--border-dark, #1E2736);
+}
+
+.settings-toggle-slider {
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.settings-toggle.active .settings-toggle-slider {
+  transform: translateX(16px);
+}
+
+.settings-preference-title {
+  font-weight: 500;
+  color: var(--text-primary-light, #E9EEF4);
+  margin: 0 0 4px 0;
+}
+
+.dark .settings-preference-title {
+  color: var(--text-primary-dark, #F5F7FA);
+}
+
+.settings-preference-description {
+  font-size: 12px;
+  color: var(--text-secondary-light, #9CA7B8);
+}
+
+.dark .settings-preference-description {
+  color: var(--text-secondary-dark, #6B7280);
+}
+
+.settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  padding-top: 16px;
+}
+
+.settings-button-cancel {
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border-light, #2B3443);
+  background: transparent;
+  color: var(--text-primary-light, #E9EEF4);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.settings-button-cancel:hover {
+  background: var(--surface-light, #161D2A);
+}
+
+.dark .settings-button-cancel {
+  border-color: var(--border-dark, #1E2736);
+  color: var(--text-primary-dark, #F5F7FA);
+}
+
+.dark .settings-button-cancel:hover {
+  background: var(--surface-dark, #0F1623);
+}
+
+.settings-button-save {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 20px rgba(130, 217, 246, 0.4);
+  background: var(--comando-neon, #82D9F6);
+  color: var(--comando-dark-inst, #0A0E17);
+}
+
+.settings-button-save:hover {
+  background: var(--comando-hover, #4DF0FF);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 24px rgba(130, 217, 246, 0.5);
+}
+
+.settings-button-save.saved {
+  background: var(--func-success, #16C47F);
+  color: white;
+  box-shadow: 0 0 20px rgba(22, 196, 127, 0.4);
+}
+
+.settings-button-save.saved:hover {
+  background: var(--func-success, #16C47F);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 24px rgba(22, 196, 127, 0.5);
+}
+

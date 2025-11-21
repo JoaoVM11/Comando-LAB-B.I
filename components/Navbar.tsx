@@ -3,6 +3,7 @@ import { useTheme } from '../context/ThemeContext';
 import { Sun, Moon, Bell, Search, UserCircle, AlertTriangle, Sparkles, Check, Trash2 } from 'lucide-react';
 import { Notification } from '../types';
 import { useAuth } from '../context/AuthContext';
+import './Navbar.css';
 
 const mockNotifications: Notification[] = [
   {
@@ -65,17 +66,17 @@ export const Navbar: React.FC<{ title: string }> = ({ title }) => {
 
   const getIcon = (type: string) => {
     switch (type) {
-      case 'alert': return <AlertTriangle size={16} className="text-func-error" />;
-      case 'insight': return <Sparkles size={16} className="text-comando-neon" />;
-      default: return <Check size={16} className="text-func-success" />;
+      case 'alert': return <AlertTriangle size={16} className="notification-icon-error" />;
+      case 'insight': return <Sparkles size={16} className="notification-icon-insight" />;
+      default: return <Check size={16} className="notification-icon-success" />;
     }
   };
 
   const getBgColor = (type: string) => {
     switch (type) {
-      case 'alert': return 'bg-func-error/10 border-func-error/20';
-      case 'insight': return 'bg-comando-neon/10 border-comando-neon/20';
-      default: return 'bg-func-success/10 border-func-success/20';
+      case 'alert': return 'notification-badge-error';
+      case 'insight': return 'notification-badge-insight';
+      default: return 'notification-badge-success';
     }
   };
 
@@ -83,99 +84,91 @@ export const Navbar: React.FC<{ title: string }> = ({ title }) => {
   const displayRole = user?.role === 'superadmin' ? 'Founder / Super Admin' : user?.role === 'supervisor' ? 'Supervisor' : 'Usuário';
   
   return (
-    <header className="h-20 px-8 flex items-center justify-between border-b border-l-border dark:border-d-border bg-l-bg/80 dark:bg-d-bg/80 backdrop-blur-md sticky top-0 z-20">
-      <h1 className="text-2xl font-display font-bold text-l-textPrimary dark:text-d-textPrimary uppercase tracking-tight">
+    <header className="navbar">
+      <h1 className="navbar-title">
         {title}
       </h1>
 
-      <div className="flex items-center gap-6">
+      <div className="navbar-actions">
         {/* Search Bar */}
-        <div className="hidden md:flex items-center gap-3 px-4 py-2 bg-l-surface dark:bg-d-surface border border-l-border dark:border-d-border rounded-full w-64 focus-within:border-comando-neon focus-within:shadow-[0_0_8px_rgba(130,217,246,0.3)] transition-all">
-          <Search size={18} className="text-l-textSecondary dark:text-d-textSecondary" />
+        <div className="navbar-search">
+          <Search size={18} className="navbar-search-icon" />
           <input 
             type="text" 
             placeholder="Buscar..." 
-            className="bg-transparent border-none outline-none text-sm text-l-textPrimary dark:text-d-textPrimary w-full placeholder-l-textSecondary dark:placeholder-d-textSecondary"
+            className="navbar-search-input"
           />
         </div>
 
-        <div className="h-6 w-px bg-l-border dark:bg-d-border mx-2" />
+        <div className="navbar-divider" />
 
         {/* Actions */}
         <button 
           onClick={toggleTheme} 
-          className="p-2 rounded-full hover:bg-l-surface dark:hover:bg-d-surface text-l-textSecondary dark:text-d-textSecondary transition-colors"
+          className="navbar-theme-button"
           title="Alternar Tema"
         >
           {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
         </button>
 
         {/* Notification Center */}
-        <div className="relative" ref={notificationRef}>
+        <div className="navbar-notification-wrapper" ref={notificationRef}>
           <button 
             onClick={() => setShowNotifications(!showNotifications)}
-            className={`
-              relative p-2 rounded-full transition-colors
-              ${showNotifications 
-                ? 'bg-comando-neon/10 text-comando-neon' 
-                : 'hover:bg-l-surface dark:hover:bg-d-surface text-l-textSecondary dark:text-d-textSecondary'}
-            `}
+            className={`navbar-notification-button ${showNotifications ? 'active' : ''}`}
           >
             <Bell size={20} />
             {unreadCount > 0 && (
-              <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-func-error rounded-full border-2 border-l-bg dark:border-d-bg animate-pulse"></span>
+              <span className="navbar-notification-badge"></span>
             )}
           </button>
 
           {/* Dropdown */}
           {showNotifications && (
-            <div className="absolute right-0 top-full mt-4 w-80 sm:w-96 bg-l-bg dark:bg-d-bg border border-l-border dark:border-d-border rounded-xl shadow-2xl overflow-hidden z-50 transform origin-top-right animate-in fade-in slide-in-from-top-2 duration-200">
-              <div className="flex items-center justify-between p-4 border-b border-l-border dark:border-d-border bg-l-surface/50 dark:bg-d-surface/50 backdrop-blur-sm">
-                <h3 className="font-display font-bold text-sm text-l-textPrimary dark:text-d-textPrimary">Notificações</h3>
+            <div className="navbar-notification-dropdown">
+              <div className="navbar-notification-header">
+                <h3 className="navbar-notification-title">Notificações</h3>
                 {notifications.length > 0 && (
                   <button 
                     onClick={handleClearAll}
-                    className="text-xs flex items-center gap-1 text-l-textSecondary hover:text-func-error transition-colors"
+                    className="navbar-notification-clear"
                   >
                     <Trash2 size={12} /> Limpar
                   </button>
                 )}
               </div>
 
-              <div className="max-h-[400px] overflow-y-auto">
+              <div className="navbar-notification-list">
                 {notifications.length === 0 ? (
-                  <div className="p-8 text-center text-l-textSecondary dark:text-d-textSecondary">
-                    <p className="text-sm">Nenhuma notificação nova.</p>
+                  <div className="navbar-notification-empty">
+                    <p>Nenhuma notificação nova.</p>
                   </div>
                 ) : (
                   notifications.map((notification) => (
                     <div 
                       key={notification.id}
                       onClick={() => handleMarkAsRead(notification.id)}
-                      className={`
-                        p-4 border-b border-l-border dark:border-d-border last:border-none hover:bg-l-surface dark:hover:bg-d-surface transition-colors cursor-pointer
-                        ${!notification.read ? 'bg-l-surface/30 dark:bg-d-surface/20' : ''}
-                      `}
+                      className={`navbar-notification-item ${!notification.read ? 'unread' : ''}`}
                     >
-                      <div className="flex gap-3">
-                        <div className={`mt-1 w-8 h-8 rounded-full flex items-center justify-center shrink-0 border ${getBgColor(notification.type)}`}>
+                      <div className="navbar-notification-content">
+                        <div className={`navbar-notification-icon-wrapper ${getBgColor(notification.type)}`}>
                           {getIcon(notification.type)}
                         </div>
-                        <div className="flex-1 space-y-1">
-                          <div className="flex justify-between items-start">
-                            <h4 className={`text-sm font-bold ${!notification.read ? 'text-l-textPrimary dark:text-d-textPrimary' : 'text-l-textSecondary dark:text-d-textSecondary'}`}>
+                        <div className="navbar-notification-text">
+                          <div className="navbar-notification-text-header">
+                            <h4 className={!notification.read ? 'unread' : ''}>
                               {notification.title}
                             </h4>
-                            <span className="text-[10px] text-l-textSecondary dark:text-d-textSecondary whitespace-nowrap ml-2">
+                            <span className="navbar-notification-time">
                               {notification.time}
                             </span>
                           </div>
-                          <p className="text-xs text-l-textSecondary dark:text-d-textSecondary leading-relaxed">
+                          <p className="navbar-notification-message">
                             {notification.message}
                           </p>
                         </div>
                          {!notification.read && (
-                           <div className="w-2 h-2 rounded-full bg-comando-neon mt-2 shrink-0" />
+                           <div className="navbar-notification-dot" />
                          )}
                       </div>
                     </div>
@@ -183,8 +176,8 @@ export const Navbar: React.FC<{ title: string }> = ({ title }) => {
                 )}
               </div>
               
-              <div className="p-3 border-t border-l-border dark:border-d-border bg-l-surface/30 dark:bg-d-surface/30 text-center">
-                <button className="text-xs font-bold text-comando-darkInst dark:text-comando-neon hover:underline">
+              <div className="navbar-notification-footer">
+                <button className="navbar-notification-view-all">
                   Ver todas as notificações
                 </button>
               </div>
@@ -192,16 +185,16 @@ export const Navbar: React.FC<{ title: string }> = ({ title }) => {
           )}
         </div>
 
-        <div className="flex items-center gap-3 pl-4 cursor-pointer group">
-          <div className="flex flex-col text-right hidden sm:block">
-            <span className="text-sm font-bold text-l-textPrimary dark:text-d-textPrimary group-hover:text-comando-neon transition-colors">
+        <div className="navbar-user">
+          <div className="navbar-user-info">
+            <span className="navbar-user-name">
                 {user?.name || 'Usuário'}
             </span>
-            <span className="text-xs text-l-textSecondary dark:text-d-textSecondary">
+            <span className="navbar-user-role">
                 {displayRole}
             </span>
           </div>
-          <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-comando-darkInst to-comando-neon flex items-center justify-center text-white font-bold border-2 border-l-surface dark:border-d-surface shadow-lg">
+          <div className="navbar-user-avatar">
             {user?.avatar || <UserCircle />}
           </div>
         </div>

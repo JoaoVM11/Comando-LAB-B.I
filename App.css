@@ -1,0 +1,146 @@
+/* App.css - Estilos Globais do Layout */
+
+.app-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-light, #0F1623);
+  transition: background-color 0.3s ease;
+}
+
+.dark .app-layout {
+  background: var(--bg-dark, #0A0E17);
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  margin-left: 260px;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Quando sidebar está colapsada */
+.sidebar.collapsed ~ .app-main {
+  margin-left: 80px;
+}
+
+@media (max-width: 768px) {
+  .app-main {
+    margin-left: 0;
+  }
+}
+
+.app-content {
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 16px;
+  scroll-behavior: smooth;
+}
+
+@media (min-width: 768px) {
+  .app-content {
+    padding: 24px;
+  }
+}
+
+.app-content-wrapper {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+/* Scrollbar personalizada */
+.app-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.app-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.app-content::-webkit-scrollbar-thumb {
+  background: var(--border-light, #2B3443);
+  border-radius: 4px;
+}
+
+.app-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(130, 217, 246, 0.3);
+}
+
+.dark .app-content::-webkit-scrollbar-thumb {
+  background: var(--border-dark, #1E2736);
+}
+
+/* Variáveis CSS para temas */
+:root {
+  --bg-light: #0F1623;
+  --bg-dark: #0A0E17;
+  --surface-light: #161D2A;
+  --surface-dark: #0F1623;
+  --border-light: #2B3443;
+  --border-dark: #1E2736;
+  --text-primary-light: #E9EEF4;
+  --text-primary-dark: #F5F7FA;
+  --text-secondary-light: #9CA7B8;
+  --text-secondary-dark: #6B7280;
+  --comando-neon: #82D9F6;
+  --comando-dark-inst: #0A0E17;
+  --func-error: #EB5757;
+  --func-success: #16C47F;
+  --func-warning: #F2C94C;
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Reset e estilos base */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Animações globais */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Utilitários */
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

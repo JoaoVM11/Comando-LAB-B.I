@@ -2,6 +2,7 @@ import React from 'react';
 import { Card } from '../components/Card';
 import { FileDown, FileText } from 'lucide-react';
 import { Report } from '../types';
+import './Reports.css';
 
 const recentReports: Report[] = [
     { id: '1', name: 'Relatório de Fechamento Q3', date: '2023-10-01', format: 'PDF', size: '2.4 MB' },
@@ -11,68 +12,68 @@ const recentReports: Report[] = [
 
 export const Reports: React.FC = () => {
     return (
-        <div className="space-y-6">
-             <div className="flex justify-between items-end">
+        <div className="reports-container">
+             <div className="reports-header">
                 <div>
-                    <h2 className="text-2xl font-display font-bold text-l-textPrimary dark:text-d-textPrimary">Relatórios</h2>
-                    <p className="text-l-textSecondary dark:text-d-textSecondary">Exporte seus dados e compartilhe resultados.</p>
+                    <h2 className="reports-title">Relatórios</h2>
+                    <p className="reports-subtitle">Exporte seus dados e compartilhe resultados.</p>
                 </div>
              </div>
 
-             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+             <div className="reports-grid">
                  {/* Generate Report Form */}
-                 <Card title="Gerar Novo Relatório" className="lg:col-span-1 h-fit">
-                     <form className="space-y-4">
-                         <div>
-                             <label className="block text-sm font-medium text-l-textSecondary dark:text-d-textSecondary mb-1">Tipo de Relatório</label>
-                             <select className="w-full p-2.5 rounded-lg bg-l-bg dark:bg-d-bg border border-l-border dark:border-d-border text-l-textPrimary dark:text-d-textPrimary focus:border-comando-neon outline-none">
+                 <Card title="Gerar Novo Relatório" className="reports-form-card">
+                     <form className="reports-form">
+                         <div className="reports-form-field">
+                             <label className="reports-form-label">Tipo de Relatório</label>
+                             <select className="reports-form-select">
                                  <option>Performance de Vendas</option>
                                  <option>Financeiro Detalhado</option>
                                  <option>Inventário</option>
                              </select>
                          </div>
-                         <div>
-                             <label className="block text-sm font-medium text-l-textSecondary dark:text-d-textSecondary mb-1">Período</label>
-                             <select className="w-full p-2.5 rounded-lg bg-l-bg dark:bg-d-bg border border-l-border dark:border-d-border text-l-textPrimary dark:text-d-textPrimary focus:border-comando-neon outline-none">
+                         <div className="reports-form-field">
+                             <label className="reports-form-label">Período</label>
+                             <select className="reports-form-select">
                                  <option>Últimos 30 dias</option>
                                  <option>Este Trimestre</option>
                                  <option>Personalizado</option>
                              </select>
                          </div>
-                         <div>
-                             <label className="block text-sm font-medium text-l-textSecondary dark:text-d-textSecondary mb-1">Formato</label>
-                             <div className="flex gap-4">
+                         <div className="reports-form-field">
+                             <label className="reports-form-label">Formato</label>
+                             <div className="reports-form-radio-group">
                                  {['PDF', 'Excel', 'CSV'].map(fmt => (
-                                     <label key={fmt} className="flex items-center gap-2 cursor-pointer">
-                                         <input type="radio" name="format" className="accent-comando-neon" />
-                                         <span className="text-sm text-l-textPrimary dark:text-d-textPrimary">{fmt}</span>
+                                     <label key={fmt} className="reports-form-radio">
+                                         <input type="radio" name="format" />
+                                         <span>{fmt}</span>
                                      </label>
                                  ))}
                              </div>
                          </div>
-                         <button type="button" className="w-full py-3 mt-2 rounded-lg bg-comando-neon text-comando-darkInst font-bold hover:bg-comando-hover transition-colors">
+                         <button type="button" className="reports-form-button">
                              Gerar Relatório
                          </button>
                      </form>
                  </Card>
 
                  {/* History List */}
-                 <Card title="Histórico de Exportações" className="lg:col-span-2">
-                    <div className="space-y-3">
+                 <Card title="Histórico de Exportações" className="reports-history-card">
+                    <div className="reports-history-list">
                         {recentReports.map(report => (
-                            <div key={report.id} className="flex items-center justify-between p-4 rounded-lg bg-l-bg dark:bg-d-bg border border-l-border dark:border-d-border hover:border-comando-neon/30 transition-colors">
-                                <div className="flex items-center gap-4">
-                                    <div className="p-2 bg-l-surface dark:bg-d-surface rounded-lg text-comando-neon">
+                            <div key={report.id} className="reports-history-item">
+                                <div className="reports-history-item-content">
+                                    <div className="reports-history-item-icon">
                                         <FileText size={24} />
                                     </div>
                                     <div>
-                                        <h4 className="font-medium text-l-textPrimary dark:text-d-textPrimary">{report.name}</h4>
-                                        <p className="text-xs text-l-textSecondary dark:text-d-textSecondary">{report.date} • {report.size}</p>
+                                        <h4 className="reports-history-item-title">{report.name}</h4>
+                                        <p className="reports-history-item-meta">{report.date} • {report.size}</p>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-3">
-                                    <span className="text-xs font-bold px-2 py-1 rounded bg-l-surface dark:bg-d-surface text-l-textSecondary dark:text-d-textSecondary border border-l-border dark:border-d-border">{report.format}</span>
-                                    <button className="p-2 text-l-textSecondary dark:text-d-textSecondary hover:text-comando-neon transition-colors">
+                                <div className="reports-history-item-actions">
+                                    <span className="reports-history-item-format">{report.format}</span>
+                                    <button className="reports-history-item-download">
                                         <FileDown size={20} />
                                     </button>
                                 </div>

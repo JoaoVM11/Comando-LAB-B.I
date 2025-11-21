@@ -1,0 +1,231 @@
+/* AdminIntelligence Page Styles */
+.admin-intelligence-container {
+  height: calc(100vh - 8rem);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  padding-bottom: 40px;
+}
+
+@media (min-width: 1024px) {
+  .admin-intelligence-container {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+.admin-intelligence-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.admin-intelligence-info-card {
+  background: linear-gradient(to bottom right, rgba(0, 168, 232, 0.2), transparent);
+  border-color: rgba(0, 168, 232, 0.3);
+}
+
+.admin-intelligence-info-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-intelligence-info-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+.admin-intelligence-suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-intelligence-suggestions-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary-light, #9CA7B8);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.dark .admin-intelligence-suggestions-title {
+  color: var(--text-secondary-dark, #6B7280);
+}
+
+.admin-intelligence-suggestion-button {
+  width: 100%;
+  text-align: left;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--surface-light, #161D2A);
+  border: 1px solid var(--border-light, #2B3443);
+  color: var(--text-secondary-light, #9CA7B8);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-intelligence-suggestion-button:hover {
+  background: var(--surface-light, #1A2330);
+  color: var(--text-primary-light, #E9EEF4);
+}
+
+.dark .admin-intelligence-suggestion-button {
+  background: var(--surface-dark, #0F1623);
+  border-color: var(--border-dark, #1E2736);
+  color: var(--text-secondary-dark, #6B7280);
+}
+
+.dark .admin-intelligence-suggestion-button:hover {
+  background: var(--surface-dark, #131A28);
+  color: var(--text-primary-dark, #F5F7FA);
+}
+
+.admin-intelligence-chat-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.admin-intelligence-chat-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-intelligence-response {
+  padding: 24px;
+  background: rgba(22, 29, 42, 0.5);
+  border-radius: 12px;
+  border: 1px solid var(--border-light, #2B3443);
+}
+
+.dark .admin-intelligence-response {
+  background: rgba(15, 22, 35, 0.5);
+  border-color: var(--border-dark, #1E2736);
+}
+
+.admin-intelligence-response-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  color: var(--comando-neon, #82D9F6);
+}
+
+.admin-intelligence-response-title {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.admin-intelligence-response-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary-light, #E9EEF4);
+  white-space: pre-wrap;
+}
+
+.dark .admin-intelligence-response-text {
+  color: var(--text-primary-dark, #F5F7FA);
+}
+
+.admin-intelligence-empty {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary-light, #9CA7B8);
+  opacity: 0.5;
+}
+
+.admin-intelligence-empty p {
+  margin-top: 16px;
+}
+
+.dark .admin-intelligence-empty {
+  color: var(--text-secondary-dark, #6B7280);
+}
+
+.admin-intelligence-input-wrapper {
+  margin-top: 16px;
+  position: relative;
+}
+
+.admin-intelligence-input {
+  width: 100%;
+  padding: 16px 48px 16px 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-light, #2B3443);
+  border-radius: 12px;
+  color: white;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.admin-intelligence-input:focus {
+  outline: none;
+  border-color: var(--comando-neon, #82D9F6);
+}
+
+.admin-intelligence-input::placeholder {
+  color: var(--text-secondary-light, #9CA7B8);
+}
+
+.dark .admin-intelligence-input {
+  border-color: var(--border-dark, #1E2736);
+}
+
+.dark .admin-intelligence-input::placeholder {
+  color: var(--text-secondary-dark, #6B7280);
+}
+
+.admin-intelligence-send-button {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  padding: 8px;
+  background: var(--comando-neon, #82D9F6);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-intelligence-send-button:hover:not(:disabled) {
+  background: #4DF0FF;
+  transform: scale(1.05);
+}
+
+.admin-intelligence-send-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.admin-intelligence-send-button .spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+

@@ -4,6 +4,7 @@ import { Card } from '../../components/Card';
 import { StatCard } from '../../components/StatCard';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Cell, PieChart, Pie } from 'recharts';
 import { Building, Users, DollarSign } from 'lucide-react';
+import './AdminDashboard.css';
 
 export const AdminDashboard: React.FC = () => {
     const [stats, setStats] = useState<any>(null);
@@ -21,25 +22,25 @@ export const AdminDashboard: React.FC = () => {
     const COLORS = ['#00A8E8', '#7B2FF7', '#4DF0FF', '#82D9F6', '#00E6A6'];
 
     return (
-        <div className="space-y-6 pb-10">
-            <div className="flex justify-between items-center">
+        <div className="admin-dashboard-container">
+            <div className="admin-dashboard-header">
                 <div>
-                    <h1 className="text-3xl font-futuristic font-bold text-login-primary uppercase">
-                        Super Admin <span className="text-white">Dashboard</span>
+                    <h1 className="admin-dashboard-title">
+                        Super Admin <span>Dashboard</span>
                     </h1>
-                    <p className="text-gray-400">Visão macro da plataforma Enterprise.</p>
+                    <p className="admin-dashboard-subtitle">Visão macro da plataforma Enterprise.</p>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="admin-dashboard-stats">
                 <StatCard label="MRR Total (Recorrente)" value={stats.totalMRR} trend={15} isCurrency />
                 <StatCard label="Empresas Ativas" value={stats.activeCompanies} trend={5} />
                 <StatCard label="Usuários na Plataforma" value={stats.totalUsers} trend={22} />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="admin-dashboard-charts">
                 <Card title="Distribuição por Segmento">
-                    <div className="h-[300px] w-full flex justify-center">
+                    <div className="admin-dashboard-chart-wrapper">
                         <ResponsiveContainer width="100%" height="100%">
                             <PieChart>
                                 <Pie 
@@ -63,7 +64,7 @@ export const AdminDashboard: React.FC = () => {
                 </Card>
 
                 <Card title="Empresas por Estado (UF)">
-                     <div className="h-[300px] w-full">
+                     <div className="admin-dashboard-chart-wrapper">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={stateData} layout="vertical">
                                 <CartesianGrid strokeDasharray="3 3" stroke="#2B3443" horizontal={false} />

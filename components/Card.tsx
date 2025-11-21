@@ -1,4 +1,5 @@
 import React from 'react';
+import './Card.css';
 
 interface CardProps {
   children: React.ReactNode;
@@ -10,25 +11,18 @@ interface CardProps {
 
 export const Card: React.FC<CardProps> = ({ children, className = '', title, action, glow }) => {
   return (
-    <div className={`
-      bg-l-surface dark:bg-d-surface 
-      border border-l-border dark:border-d-border 
-      rounded-xl p-6 
-      transition-all duration-300
-      ${glow ? 'hover:shadow-[0_0_15px_rgba(130,217,246,0.15)] hover:border-comando-neon/50' : ''}
-      ${className}
-    `}>
+    <div className={`card ${glow ? 'card-glow' : ''} ${className}`}>
       {(title || action) && (
-        <div className="flex items-center justify-between mb-6">
+        <div className="card-header">
           {title && (
-            <h3 className="font-display font-semibold text-lg text-l-textPrimary dark:text-d-textPrimary tracking-tight">
+            <h3 className="card-title">
               {title}
             </h3>
           )}
           {action && <div>{action}</div>}
         </div>
       )}
-      <div className="h-full">
+      <div className="card-content">
         {children}
       </div>
     </div>

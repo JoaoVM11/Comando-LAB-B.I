@@ -1,0 +1,312 @@
+/* ApiLibrary Page Styles */
+.api-library-container {
+  padding-bottom: 40px;
+}
+
+.api-library-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.api-library-title {
+  font-size: 24px;
+  font-family: var(--font-display, 'Inter', sans-serif);
+  font-weight: 700;
+  color: var(--text-primary-light, #E9EEF4);
+  margin: 0 0 4px 0;
+}
+
+.dark .api-library-title {
+  color: var(--text-primary-dark, #F5F7FA);
+}
+
+.api-library-subtitle {
+  color: var(--text-secondary-light, #9CA7B8);
+  font-size: 14px;
+}
+
+.dark .api-library-subtitle {
+  color: var(--text-secondary-dark, #6B7280);
+}
+
+.api-library-add-button {
+  background: var(--comando-neon, #82D9F6);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 15px rgba(123, 47, 247, 0.3);
+}
+
+.api-library-add-button:hover {
+  background: #4DF0FF;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(123, 47, 247, 0.4);
+}
+
+.api-library-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .api-library-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .api-library-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.api-library-card {
+  transition: all 0.3s ease;
+}
+
+.api-library-card:hover {
+  border-color: rgba(123, 47, 247, 0.5);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(123, 47, 247, 0.15);
+}
+
+.api-library-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.api-library-card-icon {
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--surface-light, #161D2A);
+  color: var(--comando-neon, #82D9F6);
+  border: 1px solid var(--border-light, #2B3443);
+}
+
+.dark .api-library-card-icon {
+  background: var(--surface-dark, #0F1623);
+  border-color: var(--border-dark, #1E2736);
+}
+
+.api-library-card-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.api-library-card-type {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  background: var(--surface-light, #161D2A);
+  color: var(--text-secondary-light, #9CA7B8);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.dark .api-library-card-type {
+  background: var(--surface-dark, #0F1623);
+  color: var(--text-secondary-dark, #6B7280);
+}
+
+.api-library-card-delete {
+  color: var(--text-secondary-light, #9CA7B8);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.api-library-card-delete:hover {
+  color: var(--func-error, #EB5757);
+}
+
+.dark .api-library-card-delete {
+  color: var(--text-secondary-dark, #6B7280);
+}
+
+.api-library-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary-light, #E9EEF4);
+  margin: 0 0 4px 0;
+}
+
+.dark .api-library-card-title {
+  color: var(--text-primary-dark, #F5F7FA);
+}
+
+.api-library-card-description {
+  font-size: 14px;
+  color: var(--text-secondary-light, #9CA7B8);
+  margin: 0 0 16px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.dark .api-library-card-description {
+  color: var(--text-secondary-dark, #6B7280);
+}
+
+.api-library-card-url {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-light, #2B3443);
+  font-family: monospace;
+  font-size: 10px;
+  color: var(--text-secondary-light, #9CA7B8);
+  word-break: break-all;
+  margin-bottom: 16px;
+}
+
+.dark .api-library-card-url {
+  border-color: var(--border-dark, #1E2736);
+  color: var(--text-secondary-dark, #6B7280);
+}
+
+.api-library-card-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.api-library-card-button-test {
+  flex: 1;
+  padding: 8px;
+  border-radius: 4px;
+  background: var(--surface-light, #161D2A);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.api-library-card-button-test:hover {
+  background: white;
+  color: black;
+}
+
+.dark .api-library-card-button-test {
+  background: var(--surface-dark, #0F1623);
+}
+
+.api-library-card-button-copy {
+  flex: 1;
+  padding: 8px;
+  border-radius: 4px;
+  background: rgba(123, 47, 247, 0.2);
+  color: var(--comando-neon, #82D9F6);
+  border: 1px solid rgba(123, 47, 247, 0.3);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.api-library-card-button-copy:hover {
+  background: rgba(123, 47, 247, 1);
+  color: white;
+}
+
+.api-library-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.api-library-modal-input,
+.api-library-modal-textarea {
+  width: 100%;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-light, #2B3443);
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.api-library-modal-input:focus,
+.api-library-modal-textarea:focus {
+  outline: none;
+  border-color: var(--comando-neon, #82D9F6);
+}
+
+.api-library-modal-textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+.dark .api-library-modal-input,
+.dark .api-library-modal-textarea {
+  border-color: var(--border-dark, #1E2736);
+}
+
+.api-library-modal-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.api-library-modal-select {
+  width: 100%;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-light, #2B3443);
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.api-library-modal-select:focus {
+  outline: none;
+  border-color: var(--comando-neon, #82D9F6);
+}
+
+.dark .api-library-modal-select {
+  border-color: var(--border-dark, #1E2736);
+}
+
+.api-library-modal-button {
+  width: 100%;
+  padding: 12px;
+  background: rgba(123, 47, 247, 1);
+  color: white;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.api-library-modal-button:hover {
+  background: rgba(123, 47, 247, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(123, 47, 247, 0.3);
+}
+

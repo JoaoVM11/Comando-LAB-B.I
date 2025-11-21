@@ -1,0 +1,43 @@
+/* Card Component Styles */
+.card {
+  background: var(--surface-light, #161D2A);
+  border: 1px solid var(--border-light, #2B3443);
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.dark .card {
+  background: var(--surface-dark, #0F1623);
+  border-color: var(--border-dark, #1E2736);
+}
+
+.card-glow:hover {
+  box-shadow: 0 0 15px rgba(130, 217, 246, 0.15);
+  border-color: rgba(130, 217, 246, 0.5);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.card-title {
+  font-family: var(--font-display, 'Inter', sans-serif);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--text-primary-light, #E9EEF4);
+  letter-spacing: -0.02em;
+}
+
+.dark .card-title {
+  color: var(--text-primary-dark, #F5F7FA);
+}
+
+.card-content {
+  height: 100%;
+}
+

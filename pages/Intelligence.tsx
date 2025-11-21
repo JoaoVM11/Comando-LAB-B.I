@@ -3,6 +3,7 @@ import { Card } from '../components/Card';
 import { Bot, Send, Sparkles, Zap, AlertTriangle, Lightbulb } from 'lucide-react';
 import { chatWithAnalyst, generateBusinessInsight } from '../services/geminiService';
 import { Insight, ChatMessage } from '../types';
+import './Intelligence.css';
 
 const mockContext = "As vendas caíram 12% na última semana no setor de varejo. O produto 'Enterprise X' teve um aumento de 5% na margem de lucro. A equipe de São Paulo está 20% abaixo da meta mensal.";
 
@@ -83,33 +84,29 @@ export const Intelligence: React.FC = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-8rem)] grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div className="intelligence-container">
       {/* Left Column: Insights Feed */}
-      <div className="space-y-4 overflow-y-auto pr-2">
-        <div className="flex items-center gap-2 mb-2">
-          <Sparkles className="text-comando-neon" size={20} />
-          <h2 className="font-display font-bold text-lg text-l-textPrimary dark:text-d-textPrimary">Insights Automáticos</h2>
+      <div className="intelligence-insights">
+        <div className="intelligence-insights-header">
+          <Sparkles className="intelligence-icon" size={20} />
+          <h2 className="intelligence-title">Insights Automáticos</h2>
         </div>
 
         {loadingInsights ? (
-          <div className="text-center py-10 text-l-textSecondary dark:text-d-textSecondary animate-pulse">Gerando inteligência...</div>
+          <div className="intelligence-loading">Gerando inteligência...</div>
         ) : (
           insights.map((insight) => (
             <div 
               key={insight.id} 
-              className={`
-                p-5 rounded-xl border border-l-border dark:border-d-border 
-                bg-gradient-to-br from-l-surface to-white dark:from-d-surface dark:to-[#1A2433]
-                hover:border-comando-neon/50 transition-all shadow-sm
-              `}
+              className="intelligence-insight-card"
             >
-              <div className="flex items-start gap-3 mb-2">
-                {insight.type === 'risk' && <AlertTriangle className="text-func-error" size={20} />}
-                {insight.type === 'opportunity' && <Zap className="text-func-warning" size={20} />}
-                {insight.type === 'neutral' && <Lightbulb className="text-comando-neon" size={20} />}
-                <h3 className="font-bold text-l-textPrimary dark:text-d-textPrimary">{insight.title}</h3>
+              <div className="intelligence-insight-header">
+                {insight.type === 'risk' && <AlertTriangle className="intelligence-insight-icon-error" size={20} />}
+                {insight.type === 'opportunity' && <Zap className="intelligence-insight-icon-warning" size={20} />}
+                {insight.type === 'neutral' && <Lightbulb className="intelligence-insight-icon-neutral" size={20} />}
+                <h3 className="intelligence-insight-title">{insight.title}</h3>
               </div>
-              <p className="text-sm text-l-textSecondary dark:text-d-textSecondary leading-relaxed">
+              <p className="intelligence-insight-description">
                 {insight.description}
               </p>
             </div>
@@ -118,40 +115,35 @@ export const Intelligence: React.FC = () => {
       </div>
 
       {/* Right Column: Chat Interface */}
-      <Card className="lg:col-span-2 flex flex-col h-full p-0 overflow-hidden border-comando-neon/30 shadow-[0_0_20px_rgba(130,217,246,0.05)]">
+      <Card className="intelligence-chat-card">
         {/* Chat Header */}
-        <div className="p-4 border-b border-l-border dark:border-d-border bg-l-surface/50 dark:bg-d-surface/50 flex items-center gap-3">
-            <div className="p-2 bg-comando-neon/20 rounded-lg">
-                <Bot className="text-comando-darkInst dark:text-comando-neon" size={24} />
+        <div className="intelligence-chat-header">
+            <div className="intelligence-chat-bot-icon">
+                <Bot className="intelligence-chat-bot-icon-inner" size={24} />
             </div>
             <div>
-                <h3 className="font-display font-bold text-l-textPrimary dark:text-d-textPrimary">Assistente Comando Lab</h3>
-                <span className="text-xs text-func-success dark:text-func-successDark flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" /> Online
+                <h3 className="intelligence-chat-title">Assistente Comando Lab</h3>
+                <span className="intelligence-chat-status">
+                    <span className="intelligence-chat-status-dot" /> Online
                 </span>
             </div>
         </div>
 
         {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-l-bg/50 dark:bg-d-bg/50">
+        <div className="intelligence-chat-messages">
           {messages.map((msg) => (
-            <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`
-                    max-w-[80%] p-4 rounded-2xl text-sm leading-relaxed
-                    ${msg.role === 'user' 
-                        ? 'bg-comando-neon text-comando-darkInst rounded-tr-none' 
-                        : 'bg-l-surface dark:bg-d-surface border border-l-border dark:border-d-border text-l-textPrimary dark:text-d-textPrimary rounded-tl-none'}
-                `}>
+            <div key={msg.id} className={`intelligence-message-wrapper ${msg.role === 'user' ? 'user' : 'model'}`}>
+                <div className={`intelligence-message ${msg.role === 'user' ? 'user-message' : 'model-message'}`}>
                     {msg.content}
                 </div>
             </div>
           ))}
           {isThinking && (
-             <div className="flex justify-start">
-                 <div className="bg-l-surface dark:bg-d-surface p-4 rounded-2xl rounded-tl-none border border-l-border dark:border-d-border flex gap-2">
-                     <span className="w-2 h-2 bg-comando-neon/50 rounded-full animate-bounce" />
-                     <span className="w-2 h-2 bg-comando-neon/50 rounded-full animate-bounce delay-75" />
-                     <span className="w-2 h-2 bg-comando-neon/50 rounded-full animate-bounce delay-150" />
+             <div className="intelligence-message-wrapper model">
+                 <div className="intelligence-thinking">
+                     <span className="intelligence-thinking-dot" />
+                     <span className="intelligence-thinking-dot delay-1" />
+                     <span className="intelligence-thinking-dot delay-2" />
                  </div>
              </div>
           )}
@@ -159,26 +151,26 @@ export const Intelligence: React.FC = () => {
         </div>
 
         {/* Input Area */}
-        <div className="p-4 bg-l-surface dark:bg-d-surface border-t border-l-border dark:border-d-border">
-            <div className="flex gap-2 relative">
+        <div className="intelligence-chat-input-area">
+            <div className="intelligence-chat-input-wrapper">
                 <input 
                     type="text"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                     placeholder="Pergunte sobre suas vendas, metas ou peça uma análise..."
-                    className="w-full bg-l-bg dark:bg-d-bg border border-l-border dark:border-d-border rounded-xl pl-4 pr-12 py-3 text-sm focus:outline-none focus:border-comando-neon transition-colors text-l-textPrimary dark:text-d-textPrimary placeholder-l-textSecondary dark:placeholder-d-textSecondary"
+                    className="intelligence-chat-input"
                 />
                 <button 
                     onClick={handleSendMessage}
                     disabled={!inputValue.trim() || isThinking}
-                    className="absolute right-2 top-1.5 p-1.5 bg-comando-neon text-comando-darkInst rounded-lg hover:bg-comando-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="intelligence-chat-send-button"
                 >
                     <Send size={20} />
                 </button>
             </div>
-            <div className="mt-2 text-center">
-                <p className="text-[10px] text-l-textSecondary dark:text-d-textSecondary uppercase tracking-widest opacity-60">Powered by Gemini 2.5 Flash</p>
+            <div className="intelligence-chat-footer">
+                <p className="intelligence-chat-footer-text">Powered by Gemini 2.5 Flash</p>
             </div>
         </div>
       </Card>
