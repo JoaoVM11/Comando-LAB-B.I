@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Lock, Mail, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Lock, Mail, ArrowRight, CheckCircle2, Eye, EyeOff } from 'lucide-react';
 import './Login.css'; // <-- IMPORTANTE
 import { Logo } from '../components/Logo';
 
@@ -8,6 +8,7 @@ const Login: React.FC = () => {
   const { login } = useAuth();
   const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -76,12 +77,20 @@ const Login: React.FC = () => {
               <div className="input-field">
                 <Lock size={18} className="input-icon" />
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
                 />
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
             </div>
 

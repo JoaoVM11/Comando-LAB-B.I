@@ -313,28 +313,58 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
+  align-items: stretch;
+}
+
+@media (max-width: 768px) {
+  .users-modal-form-row-three {
+    grid-template-columns: 1fr;
+  }
 }
 
 .users-modal-input,
 .users-modal-select {
-  padding: 8px;
+  padding: 8px 12px;
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid var(--border-light, #2B3443);
   border-radius: 4px;
   font-size: 14px;
   color: white;
   transition: all 0.2s ease;
+  width: 100%;
+  font-family: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2382D9F6' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 12px;
+  padding-right: 32px;
 }
 
 .users-modal-input:focus,
 .users-modal-select:focus {
   outline: none;
   border-color: var(--comando-neon, #82D9F6);
+  box-shadow: 0 0 0 3px rgba(130, 217, 246, 0.1);
+}
+
+.users-modal-select option {
+  background: var(--surface-light, #161D2A);
+  color: white;
+  padding: 8px;
 }
 
 .dark .users-modal-input,
 .dark .users-modal-select {
   border-color: var(--border-dark, #1E2736);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dark .users-modal-select option {
+  background: var(--surface-dark, #0F1623);
+  color: var(--text-primary-dark, #F5F7FA);
 }
 
 .users-modal-submit {

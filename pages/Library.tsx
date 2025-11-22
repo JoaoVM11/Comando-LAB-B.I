@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DashboardTemplate } from '../types';
+import { Modal } from '../components/Modal';
+import { CheckCircle } from 'lucide-react';
 import './Library.css';
 
 const templates: DashboardTemplate[] = [
@@ -11,6 +13,23 @@ const templates: DashboardTemplate[] = [
 ];
 
 export const Library: React.FC = () => {
+    const [selectedTemplate, setSelectedTemplate] = useState<DashboardTemplate | null>(null);
+    const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+    
+    const handleViewTemplate = (template: DashboardTemplate) => {
+        setSelectedTemplate(template);
+        setIsViewModalOpen(true);
+    };
+
+    const handleUseTemplate = () => {
+        if (selectedTemplate) {
+            // Aqui você pode adicionar a lógica para utilizar o modelo
+            // Por exemplo: redirecionar para uma página de configuração ou salvar no dashboard
+            alert(`Modelo "${selectedTemplate.name}" será aplicado ao seu dashboard!`);
+            setIsViewModalOpen(false);
+            setSelectedTemplate(null);
+        }
+    };
     
     const renderMockup = (category: string, color: string) => {
         switch(category) {
@@ -145,7 +164,10 @@ export const Library: React.FC = () => {
                             
                             {/* Hover Action */}
                             <div className="library-card-hover-action">
-                                <button className="library-card-view-button">
+                                <button 
+                                    className="library-card-view-button"
+                                    onClick={() => handleViewTemplate(template)}
+                                >
                                     Visualizar Modelo
                                 </button>
                             </div>
@@ -165,6 +187,57 @@ export const Library: React.FC = () => {
                     </div>
                 ))}
             </div>
+
+            {/* Modal de Visualização do Modelo */}
+            {selectedTemplate && (
+                <Modal
+                    isOpen={isViewModalOpen}
+                    onClose={() => {
+                        setIsViewModalOpen(false);
+                        setSelectedTemplate(null);
+                    }}
+                    title={selectedTemplate.name}
+                    footer={
+                        <button
+                            className="library-use-template-button"
+                            onClick={handleUseTemplate}
+                        >
+                            <CheckCircle size={18} />
+                            Utilizar Modelo
+                        </button>
+                    }
+                >
+                    <div className="library-view-modal-content">
+                        <div className="library-view-modal-preview">
+                            {renderMockup(selectedTemplate.category, selectedTemplate.previewColor)}
+                        </div>
+                        <div className="library-view-modal-info">
+                            <div className="library-view-modal-category">
+                                <span 
+                                    className="library-view-modal-category-dot" 
+                                    style={{ backgroundColor: selectedTemplate.previewColor }}
+                                />
+                                <span className="library-view-modal-category-label">
+                                    {selectedTemplate.category}
+                                </span>
+                            </div>
+                            <h3 className="library-view-modal-name">{selectedTemplate.name}</h3>
+                            <p className="library-view-modal-description">
+                                {selectedTemplate.description}
+                            </p>
+                            <div className="library-view-modal-features">
+                                <h4>Recursos incluídos:</h4>
+                                <ul>
+                                    <li>Dashboard pré-configurado com métricas essenciais</li>
+                                    <li>Gráficos e visualizações interativas</li>
+                                    <li>Filtros e segmentações personalizáveis</li>
+                                    <li>Integração com suas fontes de dados</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
+            )}
         </div>
     );
 };

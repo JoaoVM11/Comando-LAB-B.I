@@ -43,6 +43,11 @@
 .dashboard-actions {
   display: flex;
   gap: 12px;
+  position: relative;
+}
+
+.export-menu-wrapper {
+  position: relative;
 }
 
 .button {
@@ -324,4 +329,140 @@
 
 .kpi-card:nth-child(3) {
   animation-delay: 0.3s;
+}
+
+/* Export Menu */
+.export-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--surface-light, #161D2A);
+  border: 1px solid var(--border-light, #2B3443);
+  border-radius: 8px;
+  padding: 8px;
+  min-width: 180px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  animation: fadeInUp 0.2s ease-out;
+}
+
+.dark .export-menu {
+  background: var(--surface-dark, #0F1623);
+  border-color: var(--border-dark, #1E2736);
+}
+
+.export-menu-item {
+  width: 100%;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-primary-light, #E9EEF4);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.export-menu-item:hover {
+  background: rgba(130, 217, 246, 0.1);
+  color: #82D9F6;
+}
+
+.dark .export-menu-item {
+  color: var(--text-primary-dark, #F5F7FA);
+}
+
+/* Add Modal Content */
+.add-modal-content {
+  padding: 8px;
+}
+
+.add-type-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.add-type-button {
+  padding: 16px;
+  background: var(--surface-light, #161D2A);
+  border: 2px solid var(--border-light, #2B3443);
+  border-radius: 12px;
+  color: var(--text-primary-light, #E9EEF4);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.add-type-button:hover {
+  border-color: #82D9F6;
+  background: rgba(130, 217, 246, 0.05);
+}
+
+.add-type-button.active {
+  border-color: #82D9F6;
+  background: rgba(130, 217, 246, 0.1);
+  color: #82D9F6;
+}
+
+.dark .add-type-button {
+  background: var(--surface-dark, #0F1623);
+  border-color: var(--border-dark, #1E2736);
+  color: var(--text-primary-dark, #F5F7FA);
+}
+
+.add-mockup-form,
+.add-integration-form {
+  padding: 16px 0;
+}
+
+.add-form-description {
+  color: var(--text-secondary-light, #9CA7B8);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.dark .add-form-description {
+  color: var(--text-secondary-dark, #6B7280);
+}
+
+.add-form-button {
+  width: 100%;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #82D9F6 0%, #4DF0FF 100%);
+  border: none;
+  border-radius: 8px;
+  color: #0A0E17;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(130, 217, 246, 0.3);
+}
+
+.add-form-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(130, 217, 246, 0.4);
+}
+
+/* Click outside to close export menu */
+.export-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
 }
